@@ -12,11 +12,9 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.springframework.test.context.ActiveProfiles
 import java.math.BigDecimal
 import java.util.*
 
-@ActiveProfiles("test")
 class CustomerServiceTest {
     @Mock
     lateinit var customerRepository: CustomerRepository
@@ -32,7 +30,7 @@ class CustomerServiceTest {
     @Test
     fun `should create customer`() {
         //given
-        val fakeCustomer: Customer = buildCustomer()
+        val fakeCustomer: Customer = builderCustomer()
         Mockito.`when`(customerRepository.save(Mockito.any())).thenReturn(fakeCustomer)
 
         //when
@@ -48,7 +46,7 @@ class CustomerServiceTest {
     fun `should find customer by id`() {
         //given
         val fakeId: Long = Random().nextLong()
-        val fakeCustomer: Customer = buildCustomer(id = fakeId)
+        val fakeCustomer: Customer = builderCustomer(id = fakeId)
         Mockito.`when`(customerRepository.findById(fakeId)).thenReturn(Optional.of(fakeCustomer))
 
         //when
@@ -79,7 +77,7 @@ class CustomerServiceTest {
     fun `should delete customer by id`() {
         //given
         val fakeId: Long = Random().nextLong()
-        val fakeCustomer: Customer = buildCustomer(id = fakeId)
+        val fakeCustomer: Customer = builderCustomer(id = fakeId)
         Mockito.`when`(customerRepository.findById(fakeId)).thenReturn(Optional.of(fakeCustomer))
 
         //when
@@ -90,7 +88,7 @@ class CustomerServiceTest {
         Mockito.verify(customerRepository, Mockito.times(1)).delete(fakeCustomer)
     }
 
-    private fun buildCustomer(
+    private fun builderCustomer(
         firstName: String = "Vinícius",
         lastName: String = "Bohrer",
         cpf: String = "28475934625",
